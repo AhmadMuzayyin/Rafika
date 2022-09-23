@@ -80,14 +80,10 @@
             });
 
             google.maps.event.addListener(autocomplete, 'place_changed', function() {
-                var place = autocomplete.getPlace();
-                var latt = place.geometry.location.lat();
-                var long = place.geometry.location.lng();
-                for (let i = 0; i < place.address_components.length; i++) {
-                    const element = place.address_components[i];
-                    let kecamatan = element.long_name.match('Kecamatan');
-                    console.log(kecamatan);
-                }
+                const place = autocomplete.getPlace();
+                const latt = place.geometry.location.lat();
+                const long = place.geometry.location.lng();
+                const kcmt = place.address_components.find((items) => items.types[0] == 'administrative_area_level_3');
                 $('.kirim').click(function(e) {
                     e.preventDefault();
                     var _token = $("input[name='_token']").val();
@@ -101,6 +97,7 @@
                             lokasi: lokasi,
                             latt: latt,
                             long: long,
+                            kecamatan: kcmt.long_name,
                             sub_kegiatan_id: sub_kegiatan_id
                         },
                         success: function(data) {

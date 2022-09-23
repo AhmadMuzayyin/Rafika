@@ -46,7 +46,7 @@ class OperatorJadwalController extends Controller
             $lokasi = new Lokasi();
             $lokasi->sub_kegiatan_id = $request->id;
             $lokasi->alamat = $request->lokasi;
-            $lokasi->kecamatan = $request->lokasi;
+            $lokasi->kecamatan = $request->kecamatan;
             $lokasi->latitude = $request->latt;
             $lokasi->longitude = $request->long;
             $lokasi->save();
@@ -54,7 +54,8 @@ class OperatorJadwalController extends Controller
             return redirect()->back();
         } catch (QueryException $th) {
             $th->errorInfo;
-            toastr()->info('Server tidak merespon!');
+            // dd($th->errorInfo);
+            toastr()->info($th->getMessage());
             return redirect()->back();
         }
     }
