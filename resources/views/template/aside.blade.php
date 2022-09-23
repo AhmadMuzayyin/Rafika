@@ -178,7 +178,8 @@
                                         <span class="  nav-text">KENDALA</span>
                                     </a>
                                 </li>
-                                <li>
+                                {{-- RFK --}}
+                                {{-- <li>
                                     <a onclick="window.location.href = '{{ url('/admin/print/arsip/cover') }}'">
                                         <span class="  nav-text">COVER</span>
                                     </a>
@@ -197,7 +198,7 @@
                                     <a onclick="window.location.href = '{{ url('/admin/print/arsip/grafik') }}'">
                                         <span class="  nav-text">GRAFIK</span>
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </li>
 

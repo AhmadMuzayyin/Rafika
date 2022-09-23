@@ -19,7 +19,7 @@ class UserFactory extends Factory
         return [
             'username' => 'admin',
             'password' => bcrypt('12345'),
-            'kode_skpd' => '2',
+            'kode_skpd' => '1',
             'nama_skpd' => 'Admin',
             'nomor_tlp_kantor' => '12828328',
             'alamat_kantor' => 'Pamekasan',

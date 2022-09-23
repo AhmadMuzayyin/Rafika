@@ -48,9 +48,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/logout', 'logout');
 });
 
-// Route::get('/grafik/rankingData', 'rankingData');
-Route::get('/coba', [AdminGrafikController::class, 'rankingData']);
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/pak', [PakController::class, 'pak']);
     Route::post('/todashboard', [PakController::class, 'redirect']);
