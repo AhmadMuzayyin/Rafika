@@ -50,7 +50,7 @@
                                     <label for="skpd">SKPD:</label>
                                     <select class="form-control @error('skpdSelect') parsley-error @enderror"
                                         id="skpdSelect" name="skpdSelect">
-                                        <option value="all" {{ request()->get('skpd') == 'all' ? 'selected' : '' }}>
+                                        <option value="0" {{ request()->get('skpd') == '0' ? 'selected' : '' }}>
                                             SELURUH SKPD</option>
                                         <option value="1" {{ request()->get('skpd') == '1' ? 'selected' : '' }}>
                                             Sekretariat Daerah
@@ -130,7 +130,7 @@
         $(document).ready(function() {
             var bulan = {{ request()->get('bulan') ?? 1 }};
             var dana = {{ request()->get('dana') ?? 1 }};
-            var skpd = {{ request()->get('skpd') ?? 1 }};
+            var skpd = {{ request()->get('skpd') ?? 0 }};
             var filter = {{ request()->get('filter') ?? 1 }};
             $.ajax({
                 type: 'GET',

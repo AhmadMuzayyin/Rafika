@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAktifasiController;
 use Illuminate\Support\Facades\Route;
 // For Admin
 use App\Http\Controllers\PakController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminArsipController;
+use App\Http\Controllers\Admin\AdminBackupController;
 use App\Http\Controllers\Admin\AdminPrintController;
 use App\Http\Controllers\Admin\AdminGrafikController;
 use App\Http\Controllers\Admin\AdminJadwalController;
@@ -13,8 +15,10 @@ use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\Admin\AdminProfileController;
 // For Operator
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminPenggunaAnggaranController;
 use App\Http\Controllers\Admin\AdminPrintArsipController;
 use App\Http\Controllers\Admin\AdminSubKegiatanController;
+use App\Http\Controllers\Admin\AdminTahunAnggaranController;
 use App\Http\Controllers\Operator\OperatorArsipController;
 use App\Http\Controllers\Operator\OperatorPrintController;
 use App\Http\Controllers\Operator\OperatorGrafikController;
@@ -124,6 +128,27 @@ Route::middleware(['auth'])->group(function () {
             Route::controller(AdminProfileController::class)->group(function () {
                 Route::get('/profile/{id}', 'index');
                 Route::patch('/profile/update/{id}', 'update');
+            });
+            // For Tahun PAK
+            Route::controller(AdminTahunAnggaranController::class)->group(function () {
+                Route::get('/pak', 'index');
+                Route::post('/pak/store', 'store');
+                Route::post('/pak/kunci', 'kunci');
+                Route::delete('/pak/destroy/{id}', 'destroy');
+            });
+            // For Pengguna Anggaran
+            Route::controller(AdminPenggunaAnggaranController::class)->group(function () {
+                Route::get('pa', 'index');
+                Route::post('/pa/store', 'store');
+            });
+            // For Aktivasi
+            Route::controller(AdminAktifasiController::class)->group(function () {
+                Route::get('/aktivasi', 'index');
+                Route::post('/aktivasi/kunci/{id}', 'kunci');
+            });
+            // For Backup Data
+            Route::controller(AdminBackupController::class)->group(function () {
+                Route::get('/backup', 'index');
             });
         });
     });

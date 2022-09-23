@@ -213,23 +213,23 @@
                             </a>
                             <ul class="nav-sub">
                                 <li>
-                                    <a onclick="window.location.href = '{{ url('pak.index') }}'">
-                                        <span class="  nav-text">TAHUN PAK</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a onclick="window.location.href = '{{ url('pa.index') }}'">
+                                    <a onclick="window.location.href = '{{ url('/admin/pa') }}'">
                                         <span class="  nav-text">PA</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a onclick="window.location.href = '{{ url('backup.index') }}'">
-                                        <span class="nav-text">BACKUP DATA</span>
+                                    <a onclick="window.location.href = '{{ url('/admin/aktivasi') }}'">
+                                        <span class="nav-text">AKTIFASI</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a onclick="window.location.href = '{{ url('activation.index') }}'">
-                                        <span class="nav-text">AKTIFASI</span>
+                                    <a onclick="window.location.href = '{{ url('/admin/pak') }}'">
+                                        <span class="  nav-text">TAHUN PAK</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a onclick="window.location.href = '{{ url('/admin/backup') }}'">
+                                        <span class="nav-text">BACKUP DATA</span>
                                     </a>
                                 </li>
                             </ul>

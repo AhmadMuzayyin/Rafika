@@ -248,7 +248,7 @@ class AdminGrafikController extends Controller
         $filter = request()->get('filter') ?? 1;
         $data = [];
         $anggaran = [];
-        if ($skpd == 'all') {
+        if ($skpd == 0) {
             $data = SubKegiatan::join('jadwals', 'sub_kegiatans.id', '=', 'jadwals.sub_kegiatan_id')
                 ->join('users', 'sub_kegiatans.user_id', '=', 'users.id')
                 ->where('sub_kegiatans.pak_id', session()->get('pak_id'))

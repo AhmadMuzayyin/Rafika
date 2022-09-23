@@ -13,6 +13,7 @@
                 <tr>
                     <th scope="col">NO</th>
                     <th scope="col">LOKASI</th>
+                    <th scope="col">KECAMATAN</th>
                     <th scope="col">AKSI</th>
                 </tr>
             </thead>
@@ -21,6 +22,7 @@
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $l->alamat }}</td>
+                        <td>{{ $l->kecamatan }}</td>
                         <td>
                             <form action="{{ url('/operator/jadwal/edit/lokasi/destroy') . '/' . $l->id }}">
                                 @csrf
@@ -50,7 +52,6 @@
             </div>
             <form>
                 @csrf
-                <input type="hidden" name="sub_kegiatan_id" value="{{ $data->id }}">
                 <div class="modal-body">
                     <label for="lokasi">PILIH LOKASI</label>
                     <input type="text" class="form-control" id="lokasi" name="lokasi">
@@ -66,7 +67,7 @@
 </div>
 
 @push('script')
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key={{ ENV('MAP_KEY') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key={{ env('MAP_KEY') }}"></script>
     <script>
         var searchInput = 'lokasi';
 
@@ -88,7 +89,7 @@
                     e.preventDefault();
                     var _token = $("input[name='_token']").val();
                     var lokasi = $("input[name='lokasi']").val();
-                    var sub_kegiatan_id = $("input[name='sub_kegiatan_id']").val();
+                    var id = {{ $data->id }};
                     $.ajax({
                         type: 'POST',
                         url: '{{ url('/operator/jadwal/edit/lokasi/store') }}',
@@ -98,7 +99,7 @@
                             latt: latt,
                             long: long,
                             kecamatan: kcmt.long_name,
-                            sub_kegiatan_id: sub_kegiatan_id
+                            sub_kegiatan_id: id
                         },
                         success: function(data) {
                             if ($.isEmptyObject(data.error)) {
