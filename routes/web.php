@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Anggaran;
-use App\Models\SubKegiatan;
 use Illuminate\Support\Facades\Route;
 // For Admin
 use App\Http\Controllers\PakController;
@@ -44,74 +42,6 @@ Route::get('/', function () {
 Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');
     Route::post('/logout', 'logout');
-});
-
-Route::get('/grafik/rankingData', function () {
-    $skpd = request()->get('skpd') ?? 1;
-    $dana = request()->get('dana') ?? 1;
-    $bulan = request()->get('bulan') ?? 1;
-    $filter = request()->get('filter') ?? 1;
-    $data = [];
-    $anggaran = [];
-    if ($skpd == 'all') {
-        $data = SubKegiatan::join('jadwals', 'sub_kegiatans.id', '=', 'jadwals.sub_kegiatan_id')
-            ->join('users', 'sub_kegiatans.user_id', '=', 'users.id')
-            ->where('sub_kegiatans.pak_id', session()->get('pak_id'))
-            ->where('jadwals.pelaksanaan', session()->get('pelaksanaan'))
-            ->where('sumber_dana_id', $dana)
-            ->where('status', true)
-            ->get();
-        $anggaran = Anggaran::join('sub_kegiatans', 'sub_kegiatans.id', '=', 'anggarans.sub_kegiatan_id')
-            ->join('users', 'sub_kegiatans.user_id', '=', 'users.id')
-            ->where('sub_kegiatans.pak_id', session()->get('pak_id'))
-            ->where('sub_kegiatans.sumber_dana_id', $dana)
-            ->where('anggarans.pak_id', session()->get('pak_id'))
-            ->where('pelaksanaan', session()->get('pelaksanaan'))
-            ->get()->toArray();
-    } else {
-        $data = SubKegiatan::join('jadwals', 'sub_kegiatans.id', '=', 'jadwals.sub_kegiatan_id')
-            ->join('users', 'sub_kegiatans.user_id', '=', 'users.id')
-            ->where('sub_kegiatans.pak_id', session()->get('pak_id'))
-            ->where('jadwals.pelaksanaan', session()->get('pelaksanaan'))
-            ->where('users.kode_skpd', $skpd)
-            ->where('sumber_dana_id', $dana)
-            ->where('status', true)
-            ->get();
-        $anggaran = Anggaran::join('sub_kegiatans', 'sub_kegiatans.id', '=', 'anggarans.sub_kegiatan_id')
-            ->join('users', 'sub_kegiatans.user_id', '=', 'users.id')
-            ->where('sub_kegiatans.pak_id', session()->get('pak_id'))
-            ->where('sub_kegiatans.sumber_dana_id', $dana)
-            ->where('users.kode_skpd', $skpd)
-            ->where('anggarans.pak_id', session()->get('pak_id'))
-            ->where('pelaksanaan', session()->get('pelaksanaan'))
-            ->get()->sum('nominal_anggaran');
-    }
-
-    $ok = array();
-    foreach ($data->groupBy('user_id') as $key => $value) {
-        $trKG = 0;
-        $rfKG = 0;
-        $trKU = 0;
-        $rfKU = 0;
-        foreach ($value as $kg) {
-            $trKG += $kg->target_kegiatan;
-            $trKU += $kg->target_keuangan;
-            if ($kg->bulan_id <= $bulan) {
-                $rfKG += $kg->kegiatan_bulan_sekarang;
-                $rfKU += $kg->keuangan_bulan_sekarang;
-            }
-        }
-        if ($filter == 1) {
-            array_push($ok, [
-                'skpd' => $value[$key]->nama_skpd, 'data' => $rfKG ? round($rfKG / $trKG * 100, 2) : 0
-            ]);
-        } else {
-            array_push($ok, [
-                'skpd' => $value[$key]->nama_skpd, 'data' => $rfKU ? round($rfKU / $anggaran * 100, 2) : 0
-            ]);
-        }
-    }
-    return response()->json($ok, 200);
 });
 
 Route::middleware(['auth'])->group(function () {
