@@ -140,8 +140,12 @@
                     const ctx = document.getElementById('myChart').getContext('2d');
                     const labels = [];
                     const dataset = [];
-                    res.forEach(function(value) {
-                        labels.push(value.key)
+                    const response = res.sort(function(a, b) {
+                        return b.data - a.data;
+                    });
+                    console.log(response);
+                    response.forEach(function(value) {
+                        labels.push(value.skpd)
                         dataset.push(value.data)
                     });
                     const data = {
